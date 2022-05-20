@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="pins">
     <li v-for="pin in pins">
       <Color :pin="true" :color="pin" />
     </li>

@@ -77,6 +77,10 @@ export default {
     colors: {
       type: [Array, Boolean],
       default: false
+    },
+    code: {
+      type: Array,
+      default: () => [],
     }
   },
   data: () => ({
@@ -106,19 +110,29 @@ export default {
     }
   },
   computed: {
-    pins() {
+    pins () {
       if (this.editable) {
         // If this row is an editable one, we can't see any pins
         return false
       }
 
-      const pins = []
-
-      // TODO - create the logic to show the correct pins based on the guess
+      let pins = []
+      // Create the logic to show the correct pins based on the guess
       // a correct color in the correct spot = purple pin
       // a correct color in the wrong spot   = black pin
       // a wrong color                       = grey/"none" pin
       // pins need to be shown in the order purple - black - grey
+      for (let i = 0; i < this.selectedColors.length; i++) {
+        if(this.selectedColors[i] === this.code[i]) {
+          pins.unshift('purple')
+        } else if (this.code.includes(this.selectedColors[i])) {
+          pins.push('black')
+        }
+      }
+
+      while (pins.length < 4) {
+        pins.push('none')
+      }
 
       return pins
     }

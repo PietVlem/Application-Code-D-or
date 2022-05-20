@@ -27,9 +27,9 @@
             </ol>
             <p id="countdown">5:00</p>
           </div>
-          <Guess v-if="!guessed" @guess="handleGuess" />
+          <Guess v-if="!gameOver" :code="code" @guess="handleGuess" />
           <div v-for="(guess, index) in guesses" :key="index">
-            <Guess :colors="guess" />
+            <Guess :code="code" :colors="guess" />
           </div>
         </div>
       </div>
@@ -57,17 +57,17 @@ export default {
   data: () => ({
     possibleColors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
     code: [],
-    guessed: false,
+    gameOver: false,
     guesses: []
   }),
-  created () {
+  created() {
     window.possibleColors = this.possibleColors
   },
-  mounted () {
+  mounted() {
     this.startGame()
   },
   methods: {
-    startGame () {
+    startGame() {
       // Reset values from previous game
       this.guessed = false
       this.guesses = []
@@ -75,21 +75,21 @@ export default {
       // Set values for new game
       this.setRandomCode()
     },
-    setRandomCode () {
+    setRandomCode() {
       this.code = []
       // Our code is 4 colors long, so we loop to add a color until that is the case
       while (this.code.length < 4) {
         this.code.push(this.addColorToCode())
       }
     },
-    addColorToCode () {
+    addColorToCode() {
       // A color can only be used once in the code so we start by filtering out all the colors
       // that have been used already and then select a random one from the remaining colors
       const remainingColors = this.possibleColors.filter(color => !this.code.includes(color))
-      const randomIndex =  Math.floor(Math.random() * remainingColors.length)
+      const randomIndex = Math.floor(Math.random() * remainingColors.length)
       return remainingColors[randomIndex]
     },
-    handleGuess (guess, guessCorrect) {
+    handleGuess(guess, guessCorrect) {
       if (guessCorrect) {
         // If the guess was correct, the code at the top gets revealed and no more guesses can be made
         // TODO - show a modal with a button to start a new game
