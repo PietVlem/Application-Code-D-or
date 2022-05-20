@@ -1,7 +1,6 @@
 <template>
   <div class="color" :class="`color--${color} ${pin ? 'color--pin' : ''}`">
     <slot></slot>
-    {{ color }}
   </div>
 </template>
 

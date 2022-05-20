@@ -1,0 +1,20 @@
+.play-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0 2rem 2rem;
+
+    &__color-select {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        .color-options label {
+            cursor: pointer;
+        }
+    }
+
+    &--guess {
+        border-top: 1px solid $black;
+    }
+}

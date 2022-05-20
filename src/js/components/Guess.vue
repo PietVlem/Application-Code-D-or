@@ -1,21 +1,24 @@
 <template>
-  <form>
-    <ol>
+  <form class="play-field" :class="{'play-field--guess': !editable}">
+    <ol class="play-field__color-select">
       <li v-for="(color, index) in selectedColors" :key="index">
         <template v-if="editable">
-          <button type="button" @click="$event => showOptions = index">
+          <button 
+              class="button button--game" 
+              type="button" 
+              @click="$event => showOptions = index">
             <Color :color="color" />
           </button>
-          <fieldset v-if="showOptions === index">
-            <legend>Color</legend>
+
+          <fieldset class="color-options" v-if="showOptions === index">
             <div v-for="colorOption in possibleColors">
-              <input type="radio" name="color" :id="colorOption" :value="colorOption" @input="$event => chooseColor(index, colorOption)" />
+              <input hidden type="radio" name="color" :id="colorOption" :value="colorOption" @input="$event => chooseColor(index, colorOption)" />
               <label :for="colorOption">
                 <Color :color="colorOption" />
               </label>
             </div>
             <div>
-              <input type="radio" name="color" id="none" value="none" @input="$event => chooseColor(index, 'none')" />
+              <input hidden type="radio" name="color" id="none" value="none" @input="$event => chooseColor(index, 'none')" />
               <label for="none">
                 <Color color="none">X</Color>
               </label>
@@ -25,7 +28,7 @@
         <Color v-else :color="color" />
       </li>
     </ol>
-    <button v-if="editable" type="submit" @click.prevent="guess">Guess</button>
+    <button v-if="editable" class="button button--primary"  type="submit" @click.prevent="guess">Guess</button>
     <Pins v-else :pins="pins" />
   </form>
 </template>
