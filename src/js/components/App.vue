@@ -92,13 +92,13 @@ export default {
     handleGuess(guess, guessCorrect) {
       if (guessCorrect) {
         // If the guess was correct, the code at the top gets revealed and no more guesses can be made
-        // TODO - show a modal with a button to start a new game
-        this.guessed = true
+        // Show a modal with a button to start a new game
+        this.gameOver = true
       }
 
       // Add the guess to the array of past guesses
       this.guesses.push(guess)
-    }
+    },
   }
 }
 </script>

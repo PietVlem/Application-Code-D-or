@@ -153,8 +153,14 @@ export default {
     guess() {
       this.editable = false
 
-      // TODO - determine wether the guess is correct or not
-      const guessedCorrect = false
+      // Determine wether the guess is correct or not
+      function arrayEquals(a, b) {
+        return Array.isArray(a) &&
+          Array.isArray(b) &&
+          a.length === b.length &&
+          a.every((val, index) => val === b[index]);
+      }
+      const guessedCorrect = arrayEquals(this.selectedColors, this.code)
 
       // Emit the guess so it can be handled in the App.vue
       this.$emit('guess', this.selectedColors, guessedCorrect)
