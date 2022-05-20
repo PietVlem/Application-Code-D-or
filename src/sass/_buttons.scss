@@ -24,3 +24,19 @@
         background-color: rgba($primary, 0.70)
     }
 }
+
+.button--secondary {
+    // custom styling
+    font-weight: 500;
+    background-color: $grey;
+    min-width: 7.5rem;
+    color: $white;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    transition: background-color 250ms;
+
+    &:hover {
+        background-color: rgba($grey, 0.70)
+    }
+}

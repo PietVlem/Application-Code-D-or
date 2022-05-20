@@ -44,10 +44,27 @@
       </div>
     </footer>
 
+    <!-- Modal -->
+    <div class="modal fade" ref="myModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="myModalLabel">{{ modal.title }}</h2>
+            <button type="button" class="btn-close" @click="modal.hide()" aria-label="Close"></button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="button button--secondary" @click="modal.hide()">Close</button>
+            <button type="button" class="button button--primary" @click="playAgain">Play again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
+import { Modal } from 'bootstrap'
 import Color from './Color.vue'
 import Guess from './Guess.vue'
 
@@ -58,22 +75,59 @@ export default {
     possibleColors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
     code: [],
     gameOver: false,
-    guesses: []
+    guesses: [],
+    modal: null,
+    timer: 0,
+    modal: {
+      title: '',
+    }
   }),
   created() {
     window.possibleColors = this.possibleColors
   },
   mounted() {
     this.startGame()
+
+    this.modal = new Modal(this.$refs.myModal)
   },
   methods: {
     startGame() {
       // Reset values from previous game
-      this.guessed = false
+      this.stopTimer()
+      this.gameOver = false
       this.guesses = []
 
       // Set values for new game
       this.setRandomCode()
+
+      // timer
+      this.resetTimer()
+      this.runTimer()
+    },
+    resetTimer() {
+      this.time = 300
+    },
+    runTimer() {
+      this.myInterval = setInterval(this.updateCountdown, 1000)
+    },
+    updateCountdown() {
+      let minutes = Math.floor(this.time / 60)
+      let seconds = this.time % 60
+      seconds = seconds < 10 ? '0' + seconds : seconds
+
+      document.querySelector('#countdown').innerHTML = `${minutes}:${seconds}`
+
+      this.time--
+
+      if (this.time < 0) {
+        this.gameOver = true
+        this.modal.title = "You've lost!"
+        this.modal.show()
+        this.stopTimer()
+      }
+    },
+    stopTimer() {
+      clearInterval(this.myInterval)
     },
     setRandomCode() {
       this.code = []
@@ -94,11 +148,20 @@ export default {
         // If the guess was correct, the code at the top gets revealed and no more guesses can be made
         // Show a modal with a button to start a new game
         this.gameOver = true
+        this.modal.title = "You've won!"
+        this.modal.show()
+        this.stopTimer()
       }
 
       // Add the guess to the array of past guesses
       this.guesses.push(guess)
     },
+
+    playAgain() {
+      this.modal.hide()
+      this.startGame()
+    }
+
   }
 }
 </script>
