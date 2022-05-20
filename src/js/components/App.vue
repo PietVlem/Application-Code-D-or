@@ -1,22 +1,49 @@
 <template>
-  <div>
-    <h1>Mastermind</h1>
-    <button @click="startGame" type="button">
-      new game
-    </button>
-    <ol v-if="code.length > 0">
-      <li v-for="(color, index) in code" :key="index">
-        <Color :color="guessed ? color : 'none'" />
-      </li>
-    </ol>
-    <div v-if="!guessed">
-      <Guess @guess="handleGuess" />
-    </div>
-    <div>
-      <div v-for="(guess, index) in guesses" :key="index">
-        <Guess :colors="guess" />
+  <div class="site">
+
+    <!-- Hero -->
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm hero">
+            <h1>Code d'Or Mastermind</h1>
+            <button @click="startGame" type="button" class="button button--primary">
+              new game
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- game -->
+    <div class="body container">
+      <div class="body__inner-wrapper row">
+        <div class="col-sm">
+          <div class="solution">
+            <ol v-if="code.length > 0">
+              <li v-for="(color, index) in code" :key="index">
+                <Color :color="gameOver ? color : 'none'" />
+              </li>
+            </ol>
+            <p id="countdown">5:00</p>
+          </div>
+          <Guess v-if="!guessed" @guess="handleGuess" />
+          <div v-for="(guess, index) in guesses" :key="index">
+            <Guess :colors="guess" />
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <a href="https://codedor.be" target="_blank" class="col-sm">&copy; Code d'Or</a>
+        </div>
+      </div>
+    </footer>
+
   </div>
 </template>
 

@@ -1,0 +1,57 @@
+header {
+    background-color: $light;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 6.5rem;
+}
+
+.body {
+    &__inner-wrapper {
+        position: relative;
+        top: -3.5rem;
+
+        .solution {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: $white 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 20px #0000001A;
+    
+            ol {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            #countdown {
+                font-size: 2rem;
+                color: $primary;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+footer {
+    background-color: $black;
+
+    a {
+        display: block;
+        padding: 2rem 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: $white;
+        text-decoration: none;
+        transition: color 250ms;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+}

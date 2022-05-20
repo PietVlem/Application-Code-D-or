@@ -1,0 +1,14 @@
+.site {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .body {
+        flex-grow: 1;
+    }
+}
+
+ol, ul {
+    list-style-type: none;
+    margin: 0;
+}

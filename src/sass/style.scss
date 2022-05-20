@@ -3,6 +3,9 @@
 
 // Load general styling
 @import '_variables';
+@import '_global';
 @import '_type';
+@import '_buttons';
 
 // Load components
+@import 'components/_app';
