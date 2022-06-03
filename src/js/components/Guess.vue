@@ -135,7 +135,7 @@ export default {
   methods: {
     showColorOptions(index) {
       //this.closeAllPopovers()
-      //console.log(index)
+      console.log(index)
       this.showOptions = index
       //Popover.getInstance(document.getElementById(`button-${index}`)).show()
     },
