@@ -3,29 +3,26 @@
     <ol class="play-field__color-select">
       <li v-for="(color, buttonIndex) in selectedColors" :key="buttonIndex">
         <template v-if="editable">
-          <button data-bs-toggle="popover" class="button button--game" type="button" @click="showColorOptions(buttonIndex)">
+          <button class="button button--game" type="button" @click="showOptions = buttonIndex">
             <Color :color="color" />
           </button>
 
-          <div class="pop-over-content">
-            <fieldset class="color-options" v-if="showOptions === buttonIndex">
-              <div v-for="colorOption in possibleColors">
-                <input hidden type="radio" name="color" :id="colorOption" :value="colorOption"
-                  @input="chooseColor(buttonIndex, colorOption)" />
-                <label :for="colorOption">
-                  <Color :color="colorOption" />
-                </label>
-              </div>
-              <div>
-                <input hidden type="radio" name="color" id="none" value="none"
-                  @input="chooseColor(buttonIndex, 'none')" />
-                <label for="none">
-                  <Color color="none">X</Color>
-                </label>
-              </div>
-            </fieldset>
-          </div>
-
+          <fieldset class="color-options" v-if="showOptions === buttonIndex">
+            <div v-for="colorOption in possibleColors">
+              <input hidden type="radio" name="color" :id="colorOption" :value="colorOption"
+                @input="chooseColor(buttonIndex, colorOption)" />
+              <label :for="colorOption">
+                <Color :color="colorOption" />
+              </label>
+            </div>
+            <div>
+              <input hidden type="radio" name="color" id="none" value="none"
+                @input="chooseColor(buttonIndex, 'none')" />
+              <label for="none">
+                <Color color="none">X</Color>
+              </label>
+            </div>
+          </fieldset>
         </template>
         <Color v-else :color="color" />
       </li>
@@ -66,8 +63,7 @@ export default {
       for (let i = 0; i < popoverTriggerList.length; i++) {
         new Popover(popoverTriggerList[i], {
           html: true,
-          //content: document.querySelector(`[data-name="popover-content-${i}"]`) || '',
-          content: document.querySelector('.pop-over-content'),
+          content: document.querySelector(`[data-name="popover-content-${i}"]`) || '',
           trigger: 'manual'
         })
       }
@@ -107,10 +103,8 @@ export default {
   },
   methods: {
     showColorOptions(index) {
-      this.closeAllPopovers()
-      console.log(index)
       this.showOptions = index
-      Popover.getInstance(document.getElementById(`button-${index}`)).show()
+      //Popover.getInstance(document.getElementById(`button-${index}`)).show()
     },
     chooseColor(index, color) {
       console.log(index, color)
@@ -124,12 +118,9 @@ export default {
 
       // Set the selected color and hide the popover
       this.selectedColors[index] = color
-      console.log('selected colors', this.selectedColors)
-      //this.showOptions = false
-      Popover.getInstance(document.getElementById(`button-${index}`)).hide()
+      this.showOptions = false
     },
     guess() {
-      this.closeAllPopovers()
       this.editable = false
 
       // Determine wether the guess is correct or not
@@ -147,9 +138,6 @@ export default {
       // Set the component back to its starting state
       this.selectedColors = ['none', 'none', 'none', 'none']
       this.editable = true
-    },
-    closeAllPopovers() {
-      //document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => Popover.getInstance(el).hide())
     }
   }
 }

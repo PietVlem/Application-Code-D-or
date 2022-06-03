@@ -1,6 +1,9 @@
 <template>
   <div class="site">
 
+    <!--popover test-->
+    <Popover/>
+
     <!-- Hero -->
     <header>
       <div class="container">
@@ -67,10 +70,11 @@
 import { Modal } from 'bootstrap'
 import Color from './Color.vue'
 import Guess from './Guess.vue'
+import Popover from './Popover.vue'
 
 export default {
   name: 'App',
-  components: { Color, Guess },
+  components: { Color, Guess, Popover },
   data: () => ({
     possibleColors: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
     code: [],
