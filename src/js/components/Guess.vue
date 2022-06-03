@@ -6,7 +6,6 @@
           <button class="button button--game" type="button" @click="showOptions = buttonIndex">
             <Color :color="color" />
           </button>
-
           <fieldset class="color-options" v-if="showOptions === buttonIndex">
             <div v-for="colorOption in possibleColors">
               <input hidden type="radio" name="color" :id="colorOption" :value="colorOption"
@@ -23,41 +22,9 @@
               </label>
             </div>
           </fieldset>
-
-          <!-- <button :id="`button-${buttonIndex}`" @click="showColorOptions(buttonIndex)" type="button"
-            class="button button--game" data-bs-toggle="popover" data-bs-placement="bottom" title="Popover title">
-            <Color :color="color" />
-          </button>
-
-          <div hidden>
-            <div :data-name="`popover-content-${buttonIndex}`">
-              <fieldset class="color-options">
-                {{possibleColors}}
-                <div v-for="colorOption in possibleColors">{{ colorOption }}</div>
-                <div v-for="colorOption in possibleColors">
-                  {{ colorOption }}
-                  <input hidden type="radio" :name="`color-button-${buttonIndex}`"
-                    :id="`${colorOption}-button-${buttonIndex}`" :value="colorOption"
-                    @input="$event => chooseColor(buttonIndex, colorOption)" />
-                  <label :for="`${colorOption}-button-${buttonIndex}`">
-                    <Color :color="colorOption" />
-                  </label>
-                </div>
-                <div>
-                  <input hidden type="radio" :name="`color-button-${buttonIndex}`" :id="`none-button-${buttonIndex}`"
-                    value="none" @input="$event => chooseColor(buttonIndex, 'none')" />
-                  <label for="`none-button-${buttonIndex}`">
-                    <Color color="none">X</Color>
-                  </label>
-                </div>
-              </fieldset>
-            </div>
-          </div> -->
-
         </template>
         <Color v-else :color="color" />
       </li>
-
     </ol>
     <button v-if="editable" class="button button--primary" type="submit" @click.prevent="guess">Guess</button>
     <Pins v-else :pins="pins" />
@@ -65,7 +32,6 @@
 </template>
 
 <script>
-import { Popover } from 'bootstrap'
 import Color from './Color.vue'
 import Pins from './Pins.vue'
 
@@ -134,8 +100,6 @@ export default {
   },
   methods: {
     showColorOptions(index) {
-      //this.closeAllPopovers()
-      console.log(index)
       this.showOptions = index
       //Popover.getInstance(document.getElementById(`button-${index}`)).show()
     },
@@ -144,7 +108,6 @@ export default {
       // If the chosen color already exists in the code, we set the other instance of that color
       // to none, making the newly selected one the only instance of that color in the guess
       const currentIndex = this.selectedColors.findIndex(selected => color === selected)
-      console.log('currentIndex', currentIndex)
       if (currentIndex >= 0 && color !== 'none') {
         this.selectedColors[currentIndex] = 'none'
       }
@@ -152,10 +115,8 @@ export default {
       // Set the selected color and hide the popover
       this.selectedColors[index] = color
       this.showOptions = false
-      //Popover.getInstance(document.getElementById(`button-${index}`)).hide()
     },
     guess() {
-      //this.closeAllPopovers()
       this.editable = false
 
       // Determine wether the guess is correct or not
@@ -174,9 +135,6 @@ export default {
       this.selectedColors = ['none', 'none', 'none', 'none']
       this.editable = true
     },
-    closeAllPopovers() {
-      document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => Popover.getInstance(el).hide())
-    }
   }
 }
 </script>
